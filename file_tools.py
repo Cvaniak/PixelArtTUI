@@ -1,4 +1,6 @@
+import os
 from rich.color import Color
+
 
 
 def save_pxl(matrix, file_name):
@@ -13,6 +15,8 @@ def save_pxl(matrix, file_name):
 
 
 def load_pxl(matrix, file_name):
+    if not os.path.exists(file_name):
+        return
     with open(file_name, "r") as file:
         r = file.read().splitlines()
         for iidx, i in enumerate(r):
@@ -33,6 +37,8 @@ def save_pal(matrix, file_name):
 
 
 def load_pal(matrix, file_name):
+    if not os.path.exists(file_name):
+        return
     with open(file_name, "r") as file:
         r = file.read().splitlines()
         for i in r:
@@ -41,3 +47,4 @@ def load_pal(matrix, file_name):
                 tri = eval(k)
                 r, g, b = tri
                 matrix[jidx] = Color.from_rgb(red=r, green=g, blue=b)
+

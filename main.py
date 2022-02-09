@@ -314,7 +314,7 @@ class SimpleApp(App):
     async def on_mount(self) -> None:
         w, h = 64, 64
         self.status = StatusWidget()
-        self.game = Canvas(w, h)
+        self.canvas = Canvas(w, h)
 
         self.c_red = ColorWidget("red")
         self.c_green = ColorWidget("green")
@@ -327,7 +327,7 @@ class SimpleApp(App):
         self.layout = Layout(
             w,
             h,
-            self.game,
+            self.canvas,
             self.status,
             self.c_red,
             self.c_green,
@@ -355,7 +355,7 @@ class SimpleApp(App):
         self.c_red.update(r)
         self.c_green.update(g)
         self.c_blue.update(b)
-        self.game.set_color(self.c_box.get_color())
+        self.canvas.set_color(self.c_box.get_color())
 
     async def handle_load_save_status(self, message: LoadSaveStatus):
         format = {"pxl", "pal"}
@@ -366,16 +366,17 @@ class SimpleApp(App):
 
         if end == "pxl":
             if message.loadsave == "Save":
-                save_pxl(self.game.matrix, file_name)
+                save_pxl(self.canvas.matrix, file_name)
             elif message.loadsave == "Load":
-                load_pxl(self.game.matrix, file_name)
-                self.game.refresh()
+                load_pxl(self.canvas.matrix, file_name)
+                self.canvas.refresh()
 
         elif end == "pal":
             if message.loadsave == "Save":
                 save_pal(self.c_box.saved, file_name)
             elif message.loadsave == "Load":
                 load_pal(self.c_box.saved, file_name)
+                self.canvas.set_color(self.c_box.get_color())
                 self.c_box.refresh()
 
 

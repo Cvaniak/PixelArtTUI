@@ -13,46 +13,29 @@ from textual.widget import Widget
 from textual.widgets import ButtonPressed, Button
 from rich.panel import Panel
 
+
 class MyButtonPressed(Message):
     def __init__(self, sender: Widget, value: str):
         super().__init__(sender)
         self.value = value
 
 
-
-class MyButtonRenderable:
-    def __init__(self, label: RenderableType, style: StyleType = "") -> None:
-        self.label = label
-        self.style = style
-
-    def __rich_console__(
-        self, console: Console, options: ConsoleOptions
-    ) -> RenderResult:
-        width = options.max_width
-        height = options.height or 1
-
-        yield Align.center(
-            self.label, vertical="middle", style=self.style, width=width, height=height
-        )
-
-
 class MyButton(Button):
     mouse_over: Reactive[bool] = Reactive(False)
     has_focus: Reactive[bool] = Reactive(False)
- 
+
     def __init__(
         self,
         label: RenderableType,
         name: str | None = None,
         style: StyleType = "white on dark_blue",
-        value: str = ""
+        value: str = "",
     ):
         super().__init__(label, name, style)
-        self.value =value
+        self.value = value
 
     def render(self) -> RenderableType:
         return self
-        # return MyButtonRenderable(self.label, style=self.button_style)
 
     def __rich_console__(
         self, console: Console, options: ConsoleOptions
@@ -66,6 +49,7 @@ class MyButton(Button):
             style=self.button_style,
             # height=height,
         )
+
     async def on_click(self, event: events.Click) -> None:
         await self.emit(MyButtonPressed(self, self.value))
 
@@ -81,5 +65,3 @@ class MyButton(Button):
 
     async def on_mouse_up(self, _) -> None:
         self.has_focus = False
-
-

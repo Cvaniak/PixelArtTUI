@@ -5,14 +5,13 @@ from textual import events
 
 from textual.app import App
 
-from canvas import Canvas, MouseStatus, Tools
+from canvas import Canvas, MouseStatus, Tools, Grid
 
 from textual_inputs import TextInput
 from file_tools import save_pxl, load_pxl, save_pal, load_pal
 
-from my_widgets import DebugStatus, ColorStatus, LoadSaveStatus
+from my_messages import DebugStatus, ColorStatus, LoadSaveStatus
 from my_widgets import LoadSave, StatusWidget, ColorWidget, ColorBox, ToolsWidget
-from canvas import Grid, ToolPick, ToolPaint
 
 
 class Layout(GridView):
@@ -168,7 +167,7 @@ class SimpleApp(App):
         if message.value == "pick":
             self.canvas.set_tool(Tools.PICK)
         if message.value == "paint":
-            self.canvas.set_tool(Tools.PAINT)            # color = self.canvas.get_color()
+            self.canvas.set_tool(Tools.PAINT)  # color = self.canvas.get_color()
             # self.canvas.set_color()
 
     async def handle_color_under_mouse(self, message):
@@ -180,5 +179,6 @@ class SimpleApp(App):
             self.c_red.update(r)
             self.c_green.update(g)
             self.c_blue.update(b)
+
 
 SimpleApp.run()

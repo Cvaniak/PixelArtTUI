@@ -1,4 +1,3 @@
-from rich import align
 from rich.align import Align
 from rich.console import (
     RenderableType,
@@ -12,7 +11,6 @@ from textual import events
 
 from rich.panel import Panel
 
-from textual.message import Message
 from rich.segment import Segment
 from rich.style import Style
 
@@ -28,28 +26,10 @@ from rich.console import (
 from my_button import MyButton
 from typing import List
 
+from my_messages import DebugStatus, ColorStatus, LoadSaveStatus
 
 def minmax(a, mn, mx):
     return max(min(mx, a), mn)
-
-
-class DebugStatus(Message):
-    def __init__(self, sender: Widget, mes: str):
-        super().__init__(sender)
-        self.mes = mes
-
-
-class ColorStatus(Message):
-    def __init__(self, sender: Widget, color: dict):
-        super().__init__(sender)
-        self.color = color
-
-
-class LoadSaveStatus(Message):
-    def __init__(self, sender: Widget, loadsave: str):
-        super().__init__(sender)
-        self.loadsave = loadsave
-
 
 class LoadSave(Widget):
     chosen: Reactive = Reactive(0)
@@ -92,9 +72,11 @@ class ColorBox(Widget):
     red: Reactive[int] = Reactive(0)
     green: Reactive[int] = Reactive(0)
     blue: Reactive[int] = Reactive(0)
-    saved: Reactive[List[Color]] = Reactive([Color.from_rgb(0, 0, 0) for _ in range(35)])
+    saved: Reactive[List[Color]] = Reactive(
+        [Color.from_rgb(0, 0, 0) for _ in range(35)]
+    )
     chosen: Reactive = Reactive(0)
-    to_display: Reactive = Reactive(Color.from_rgb(0,0,0))
+    to_display: Reactive = Reactive(Color.from_rgb(0, 0, 0))
 
     def __init__(self, r: int, g: int, b: int, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -204,9 +186,6 @@ class ColorWidget(Widget):
         self.value = value
         self.fill = value * self._size.height // 255
 
-    async def on_mouse_move(self, _: events.MouseMove) -> None:
-        ...
-
     async def on_click(self, event: events.Click) -> None:
         max_h = self._size.height - 2
         self.fill = minmax(event.y, 0, max_h)
@@ -253,7 +232,6 @@ class ToolsWidget(GridView):
         ...
 
     def on_mount(self) -> None:
-        # Attributes to store the current calculation
         self.grid.set_gap(1, 1)
         self.grid.set_gutter(0)
         self.grid.set_align("center", "center")
@@ -268,12 +246,14 @@ class ToolsWidget(GridView):
         self.grid.add_areas(new="cold-start|cole-end,row1")
         self.grid.add_areas(pick="cold-start|cole-end,row2")
         self.grid.add_areas(paint="cola-start|colc-end,row2")
-        # Place out widgets in to the layout
+
         self.g8 = MyButton(label="8 \n x\n  8", style="red", value="8")
         self.g16 = MyButton(label="16 \n x\n 16", style="green", value="16")
         self.g32 = MyButton(label="32 \n x\n 32", style="blue", value="32")
 
-        self.new = MyButton(label=Align("New\n  Canvas", align="center"), style="white", value="new")
+        self.new = MyButton(
+            label=Align("New\n  Canvas", align="center"), style="white", value="new"
+        )
         self.pick_tool = MyButton(label="Pick \n  Color", style="yellow", value="pick")
         self.paint_tool = MyButton(label="\nPaint", style="yellow", value="paint")
 
@@ -282,7 +262,3 @@ class ToolsWidget(GridView):
         self.grid.place(new=self.new)
         self.grid.place(pick=self.pick_tool)
         self.grid.place(paint=self.paint_tool)
-
-    async def handle_button_pressed(self, message):
-        ...
-

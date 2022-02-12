@@ -26,10 +26,12 @@ class Grid(Enum):
     g16x16 = 2
     g32x32 = 1
 
+
 class MouseStatus(Message):
     def __init__(self, sender: Widget, pos: tuple):
         super().__init__(sender)
         self.pos = pos
+
 
 class ColorUnderMouse(Message):
     def __init__(self, sender: Widget, change: bool, color: Color):
@@ -39,7 +41,7 @@ class ColorUnderMouse(Message):
 
 
 class Tool(ABC):
-    current_color: Color = Color.from_rgb(0,0,0)
+    current_color: Color = Color.from_rgb(0, 0, 0)
     mouse_pos: tuple = (0, 0)
 
     def __init__(self, canvas, color) -> None:
@@ -64,12 +66,15 @@ class Tool(ABC):
 
     def set_color(self, color: Color):
         self.current_color = color
- 
+
     async def show_on_grid(self, xx, yy):
         y, x = self.mouse_pos
         if y != -1:
             self.canvas.matrix[y][x] = self.under_mouse_color
-        self.mouse_pos = (yy // self.canvas.grid.value, xx // (2 * self.canvas.grid.value))
+        self.mouse_pos = (
+            yy // self.canvas.grid.value,
+            xx // (2 * self.canvas.grid.value),
+        )
         y, x = self.mouse_pos
         self.under_mouse_color = self.canvas.matrix[y][x]
         self.canvas.matrix[y][x] = self.current_color
@@ -82,7 +87,7 @@ class ToolPaint(Tool):
 
     def __init__(self, canvas, color) -> None:
         super().__init__(canvas, color)
-    
+
     async def on_mouse_down(self, event: events.MouseDown):
         self.is_painting = True
 
@@ -106,7 +111,6 @@ class ToolPaint(Tool):
 
 
 class ToolPick(Tool):
-
     async def on_mouse_down(self, event: events.MouseDown):
         ...
 
@@ -116,10 +120,14 @@ class ToolPick(Tool):
     async def on_mouse_move(self, event: events.MouseMove):
         await self.show_on_grid(event.x, event.y)
 
-        await self.canvas.emit(ColorUnderMouse(self.canvas, False, self.under_mouse_color))
+        await self.canvas.emit(
+            ColorUnderMouse(self.canvas, False, self.under_mouse_color)
+        )
 
     async def on_click(self, event: events.Click):
-        await self.canvas.emit(ColorUnderMouse(self.canvas, True, self.under_mouse_color))
+        await self.canvas.emit(
+            ColorUnderMouse(self.canvas, True, self.under_mouse_color)
+        )
 
     async def on_leave(self, event):
         y, x = self.mouse_pos
@@ -154,7 +162,7 @@ class Canvas(Widget):
             for x in range(w)
         ]
         self.under_mouse_color = self.matrix[0][0]
-        self.tool: Tool = ToolPaint(self, self.current_color) 
+        self.tool: Tool = ToolPaint(self, self.current_color)
 
     def set_tool(self, tool: Tools):
         self.tool = tool.value(self, self.current_color)
@@ -185,12 +193,12 @@ class Canvas(Widget):
         return self
 
     def set_matrix(self):
-        w, h = self.w, self.h
+        w, h = self.w*2, self.h*2
         self.matrix = [
             [Color.from_rgb(0, 0, 32 + 32 * ((-1) ** (y + x))) for y in range(h)]
             for x in range(w)
         ]
-       
+
     def __rich_console__(
         self, console: Console, options: ConsoleOptions
     ) -> RenderResult:
@@ -204,4 +212,3 @@ class Canvas(Widget):
                     "▄▄" * self.grid.value, Style(bgcolor=bgcolor, color=color)
                 )
             yield Segment.line()
-

@@ -2,7 +2,6 @@ import os
 from rich.color import Color
 
 
-
 def save_pxl(matrix, file_name):
     with open(file_name, "w") as file:
         for row in matrix:
@@ -47,4 +46,3 @@ def load_pal(matrix, file_name):
                 tri = eval(k)
                 r, g, b = tri
                 matrix[jidx] = Color.from_rgb(red=r, green=g, blue=b)
-

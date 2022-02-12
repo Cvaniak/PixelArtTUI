@@ -37,6 +37,7 @@ class Canvas(Widget):
     mouse_pos: tuple = (0, 0)
     current_color: Color = Color.from_rgb(0, 0, 0)
     is_painting: bool = False
+    tool: str = "paint"
 
     def __init__(
         self, w: int = 60, h: int = 60, grid: Grid = Grid.g8x8, *args, **kwargs
@@ -72,19 +73,29 @@ class Canvas(Widget):
         await self.emit(MouseStatus(self, self.mouse_pos))
         self.update()
 
-    async def on_click(self, event: events.Click) -> None:
+    async def on_click(self, _: events.Click) -> None:
         self.under_mouse_color = self.current_color
 
-    def on_mouse_down(self, event: events.MouseUp) -> None:
+    def on_mouse_down(self, _: events.MouseUp) -> None:
         # return await super().on_mouse_down(event)
         self.is_painting = True
-        
-    def on_mouse_up(self, event: events.MouseUp) -> None:
+
+    def on_mouse_up(self, _: events.MouseUp) -> None:
         # return await super().on_mouse_down(event)
         self.is_painting = False
-        
+
     def set_color(self, color: Color):
         self.current_color = color
+
+    def set_matrix(self):
+        w, h = self.w, self.h
+        self.matrix = [
+            [Color.from_rgb(0, 0, 32 + 32 * ((-1) ** (y + x))) for y in range(h)]
+            for x in range(w)
+        ]
+       
+    def set_tool(self, tool):
+        self.tool = tool
 
     def __rich_console__(
         self, console: Console, options: ConsoleOptions

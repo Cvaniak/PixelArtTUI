@@ -1,6 +1,6 @@
 # Pixel Art App In Terminal 
 
-![PXLimage](./documentation/PXL.png)
+![PXLimage](./documentation/pxl.png)  
 To start with Pixel Art you dont need fancy tools. In fact you can go with only terminal and mouse!  
 With help of amazing `Textual` here is `Paint` like app that provides all features for creating *Pixel Art*.  
 It works in **terminal** and supports **mouse** so you can use it like normal Window app without need to use shortcuts (like others teminal based Paint apps do).

@@ -18,6 +18,3 @@ class LoadSaveStatus(Message):
     def __init__(self, sender: Widget, loadsave: str):
         super().__init__(sender)
         self.loadsave = loadsave
-
-
-

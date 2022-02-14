@@ -28,8 +28,10 @@ from typing import List
 
 from pixelart_tui.my_messages import DebugStatus, ColorStatus, LoadSaveStatus
 
+
 def minmax(a, mn, mx):
     return max(min(mx, a), mn)
+
 
 class LoadSave(Widget):
     chosen: Reactive = Reactive(0)

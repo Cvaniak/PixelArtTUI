@@ -18,7 +18,7 @@ from enum import Enum
 from typing import List
 from abc import ABC
 
-from my_widgets import ColorStatus
+from pixelart_tui.my_widgets import ColorStatus
 
 
 class Grid(Enum):

@@ -25,6 +25,7 @@ python3 -m install -r requirements.txt
 ```
 and then you can double-click on `run.sh` (Linux/Mac) or `run.bat` (Windows) to start or from terminal run:
 ```bash
+cd pixelart_tui
 python3 main.py
 ```
 

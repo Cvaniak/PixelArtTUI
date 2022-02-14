@@ -23,13 +23,15 @@ from rich.console import (
     RenderResult,
     RenderableType,
 )
-from my_button import MyButton
+from pixelart_tui.my_button import MyButton
 from typing import List
 
-from my_messages import DebugStatus, ColorStatus, LoadSaveStatus
+from pixelart_tui.my_messages import DebugStatus, ColorStatus, LoadSaveStatus
+
 
 def minmax(a, mn, mx):
     return max(min(mx, a), mn)
+
 
 class LoadSave(Widget):
     chosen: Reactive = Reactive(0)

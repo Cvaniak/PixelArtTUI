@@ -5,13 +5,19 @@ from textual import events
 
 from textual.app import App
 
-from canvas import Canvas, MouseStatus, Tools, Grid
+from pixelart_tui.canvas import Canvas, MouseStatus, Tools, Grid
 
 from textual_inputs import TextInput
-from file_tools import save_pxl, load_pxl, save_pal, load_pal
+from pixelart_tui.file_tools import save_pxl, load_pxl, save_pal, load_pal
 
-from my_messages import DebugStatus, ColorStatus, LoadSaveStatus
-from my_widgets import LoadSave, StatusWidget, ColorWidget, ColorBox, ToolsWidget
+from pixelart_tui.my_messages import DebugStatus, ColorStatus, LoadSaveStatus
+from pixelart_tui.my_widgets import (
+    LoadSave,
+    StatusWidget,
+    ColorWidget,
+    ColorBox,
+    ToolsWidget,
+)
 
 
 class Layout(GridView):
@@ -181,4 +187,5 @@ class SimpleApp(App):
             self.c_blue.update(b)
 
 
-SimpleApp.run()
+if __name__ == "__main__":
+    SimpleApp.run()

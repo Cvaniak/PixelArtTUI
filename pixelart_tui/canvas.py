@@ -18,7 +18,7 @@ from enum import Enum
 from typing import List
 from abc import ABC
 
-from my_widgets import ColorStatus
+from pixelart_tui.my_widgets import ColorStatus
 
 
 class Grid(Enum):
@@ -193,7 +193,7 @@ class Canvas(Widget):
         return self
 
     def set_matrix(self):
-        w, h = self.w*2, self.h*2
+        w, h = self.w * 2, self.h * 2
         self.matrix = [
             [Color.from_rgb(0, 0, 32 + 32 * ((-1) ** (y + x))) for y in range(h)]
             for x in range(w)

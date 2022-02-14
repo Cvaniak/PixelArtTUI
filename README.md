@@ -1,11 +1,22 @@
 # Pixel Art App In Terminal 
 
-![PXLimage](./documentation/pxl.png)  
+![PXLimage](https://raw.githubusercontent.com/Cvaniak/PixelArtTUI/master/documentation/pxl.png)  
 To start with Pixel Art you dont need fancy tools. In fact you can go with only terminal and mouse!  
 With help of amazing `Textual` here is `Paint` like app that provides all features for creating *Pixel Art*.  
 It works in **terminal** and supports **mouse** so you can use it like normal Window app without need to use shortcuts (like others teminal based Paint apps do).
 
-# Installation
+# Installation with Pip [recommended]
+The easiest way to start is with `pip`:
+```bash
+pip3 install pixelart_tui
+```
+after that you can use it like this:
+```
+pixelart_tui
+```
+and thats all!
+
+# From source 
 To use you need `Python 3.6+` and you can start with command in terminal:
 ```bash
 pip3 install -r requirements.txt

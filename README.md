@@ -1,4 +1,4 @@
-# Pixel Art App In Terminal 
+# Pixel Art App In Terminal (Version 0.3)
 
 ![PXLimage](https://raw.githubusercontent.com/Cvaniak/PixelArtTUI/master/documentation/pxl.png)  
 To start with Pixel Art you dont need fancy tools. In fact you can go with only terminal and mouse!  

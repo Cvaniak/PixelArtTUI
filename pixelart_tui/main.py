@@ -85,6 +85,13 @@ class Layout(GridView):
 
 
 class SimpleApp(App):
+    def __init__(self, *args, **kwargs):
+        image = kwargs.pop("image", None)
+        pallete = kwargs.pop("pallete", None)
+        super().__init__(*args, **kwargs)
+        self._load_image_on_start = image
+        self._load_pallete_on_start = pallete
+
     async def on_load(self, _: events.Load) -> None:
         await self.bind("q", "quit", "Quit")
         await self.bind("r", "reset()", "Reset")
@@ -93,11 +100,15 @@ class SimpleApp(App):
         w, h = 64, 64
         self.status = StatusWidget()
         self.canvas = Canvas(w, h, grid=Grid.g32x32)
+        if self._load_image_on_start is not None:
+            load_pxl(self.canvas.matrix, self._load_image_on_start)
 
         self.c_red = ColorWidget("red")
         self.c_green = ColorWidget("green")
         self.c_blue = ColorWidget("blue")
         self.c_box = ColorBox(0, 0, 0)
+        if self._load_pallete_on_start is not None:
+            load_pal(self.c_box.saved, self._load_pallete_on_start)
 
         self.name_input = TextInput(placeholder="file_name")
         self.loadsave = LoadSave()
@@ -139,7 +150,7 @@ class SimpleApp(App):
         format = {"pxl", "pal"}
         file_name = self.name_input.value
         end = file_name.split(".")[-1]
-        if not end in format:
+        if end not in format:
             return
 
         if end == "pxl":

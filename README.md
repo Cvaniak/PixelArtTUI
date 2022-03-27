@@ -13,6 +13,8 @@ pip3 install pixelart_tui
 after that you can use it like this:
 ```
 pixelart_tui
+# or you can open existing image or pallete with:
+pixelart_tui --pxl image_file.pxl --pal pallete_file.pal
 ```
 and thats all!
 
@@ -40,4 +42,3 @@ This TUI supports:
 To save image you need to provide name and finish with `.pxl`, for example `my_image.pxl`. You can also import any image saved in this format.
 
 To save paletts you need to end name with `.pal`, for example `my_palette.pal`. You can also modify this pallete from text editor so you can use **colors in full 0-255 range**, where normaly there normally you use only 16 of them.
-
